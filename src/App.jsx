@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import cntl from "cntl";
+// import cntl from "cntl";
 import Button from "./stories/Components/Button/Button";
 import CollapsibleSection from "./stories/Components/CollapsibleSection/CollapsibleSection";
 import Input from "./stories/Components/Input/Input";
@@ -8,12 +8,12 @@ import Dropdown from "./stories/Components/Dropdown/Dropdown";
 import ProgressTracker from "./stories/Components/ProgressTracker/ProgressTracker";
 import NavBar from "./stories/Components/NavBar/NavBar";
 
-const containerCN = cntl`
-  mt-3
-  p-3
-  border
-  rounded
-`;
+// const containerCN = cntl`
+//   mt-3
+//   p-3
+//   border
+//   rounded
+// `;
 
 // const labelCN = cntl`
 //   flex
@@ -21,6 +21,8 @@ const containerCN = cntl`
 //   text-base
 //   text-gray-200
 // `;
+
+let submitObj = {};
 
 // options for dropdown elements
 const companyOptions = [
@@ -65,10 +67,9 @@ const App = () => {
   };
 
   const handleBtnClick = (evt) => {
-    // We should check here if any required fields is provided
-    // Otherwise abort submision and inform user (in the current test print/console.log a message)
+    evt.preventDefault();
 
-    const submitObj = {
+    submitObj = {
       eSpaceName,
       companyName: companyName.value,
       subscription: subscription.value,
@@ -85,8 +86,11 @@ const App = () => {
         postalCode,
       },
     };
-    evt.preventDefault();
+    // We should check here if any required fields is provided
+    // Otherwise abort submision and inform user (in the current test print/console.log a message)
+
     console.log({ submitObj }); // not recommended in production code
+
     // clear form fields
   };
 
@@ -110,12 +114,12 @@ const App = () => {
   return (
     <div className="bg-black h-full w-full flex justify-center overflow-auto">
       <div className="p-10 w-1/3 lg:w-2/3">
-        <div className={containerCN}>
-          <p>Nav bar</p>
+        <div>
+          {/* <p>Nav bar</p> */}
           <NavBar />
         </div>
-        <div className={containerCN}>
-          <p>Progress Tracker</p>
+        <div>
+          {/* <p>Progress Tracker</p> */}
           <ProgressTracker
             steps={Array(5)
               .fill()
@@ -124,7 +128,7 @@ const App = () => {
         </div>
         {/* wrapping elements in form element just in case we need to take advantage of some form props */}
         <form noValidate className="w-full">
-          <div className={containerCN}>
+          <div className="border-b-2">
             <CollapsibleSection title="Overview">
               <div className="lg:grid lg:grid-cols-2 lg:gap-x-4">
                 <Dropdown
@@ -154,7 +158,7 @@ const App = () => {
               </div>
             </CollapsibleSection>
           </div>
-          <div className={containerCN}>
+          <div className="border-b-2 mt-4">
             <CollapsibleSection title="Owner Information">
               <div className="lg:grid lg:grid-cols-2 lg:gap-x-4">
                 <Input
@@ -186,7 +190,7 @@ const App = () => {
               </div>
             </CollapsibleSection>
           </div>
-          <div className={containerCN}>
+          <div className="mt-4">
             <CollapsibleSection title="Location Information">
               <div className="lg:grid lg:grid-cols-2 lg:gap-x-4">
                 <Input
@@ -231,8 +235,8 @@ const App = () => {
               </div>
             </CollapsibleSection>
           </div>
-          <div className={containerCN}>
-            <Button title="Button" onClick={handleBtnClick} type="submit" />
+          <div className="mt-12">
+            <Button title="Submit" onClick={handleBtnClick} type="submit" />
           </div>
         </form>
       </div>

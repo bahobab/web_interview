@@ -24,3 +24,6 @@ Open a terminal then run:
 1. `npm install --legacy-peer-deps`
 2. `npm run start`
 3. open your browser to http://localhost:1234
+4. fill out the form
+5. click the submit button
+6. open the browser's dev console to see the print out of the form fields/values as an object
