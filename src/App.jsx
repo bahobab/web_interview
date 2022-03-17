@@ -15,6 +15,14 @@ const containerCN = cntl`
   rounded
 `;
 
+// const labelCN = cntl`
+//   flex
+//   mb-2
+//   text-base
+//   text-gray-200
+// `;
+
+// options for dropdown elements
 const companyOptions = [
   { label: "Sea Green", value: "Sea Green Corp." },
   { label: "Sky Blue", value: "Sky Blue Inc." },
@@ -51,11 +59,15 @@ const App = () => {
   const [country, setCountry] = useState(null);
   const [postalCode, setPostalCode] = useState("");
 
+  // handle all state changes
   const masterChange = (val, func) => {
     func(val);
   };
 
   const handleBtnClick = (evt) => {
+    // We should check here if any required fields is provided
+    // Otherwise abort submision and inform user (in the current test print/console.log a message)
+
     const submitObj = {
       eSpaceName,
       companyName: companyName.value,
@@ -74,18 +86,29 @@ const App = () => {
       },
     };
     evt.preventDefault();
-    console.log({ submitObj });
+    console.log({ submitObj }); // not recommended in production code
   };
+
+  // utility function to make the Subscription dropdown required
+  // const setRequiredField = (fieldLabel) => {
+  //   return (
+  //     fieldLabel && (
+  //       <div className={labelCN}>
+  //         <p>{fieldLabel}</p>
+  //         {true && (
+  //           <>
+  //             <p className="text-brandGreen text-sm">*</p>
+  //             <p className="text-brandRed italic ml-2">Required</p>
+  //           </>
+  //         )}
+  //       </div>
+  //     )
+  //   );
+  // };
 
   return (
     <div className="bg-black h-full w-full flex justify-center overflow-auto">
-      <div className="p-10 w-1/3">
-        <p>Create a screen here!</p>
-        <p>
-          Below are the provided Components that will be needed. You won&apos;t
-          be expected to modify these Components at all, but you may need to
-          study them and pass props.
-        </p>
+      <div className="p-10 w-1/3 lg:w-2/3">
         <div className={containerCN}>
           <p>Nav bar</p>
           <NavBar />
@@ -98,93 +121,111 @@ const App = () => {
               .map((a, index) => `Step ${index + 1}`)}
           />
         </div>
-        <div className={containerCN}>
-          <CollapsibleSection title="Overview">
-            <>
-              <Dropdown
-                label="Company Name"
-                options={companyOptions}
-                onChange={(val) => masterChange(val, setCompany)}
-                value={companyName}
-              />
-              <Input
-                label="Space Name*"
-                placeholder="Space Name"
-                onChange={(val) => masterChange(val, setSpaceName)}
-                value={eSpaceName}
-              />
-              <Dropdown
-                label="Subscription*"
-                options={subscriptionOptions}
-                onChange={(val) => masterChange(val, setSubscription)}
-                value={subscription}
-              />
-            </>
-          </CollapsibleSection>
-        </div>
-        <div className={containerCN}>
-          <CollapsibleSection title="Owner Information">
-            <>
-              <Input
-                label="Primary Owner*"
-                placeholder="Primary Owner"
-                onChange={(val) => masterChange(val, setName)}
-                value={name}
-              />
-              <Input
-                label="Primary Owner Email*"
-                placeholder="Primary Email"
-                onChange={(val) => masterChange(val, setEmail)}
-                value={email}
-              />
-              <Input
-                label="Primary Owner Phone"
-                placeholder="Primary Phone"
-                onChange={(val) => masterChange(val, setPhone)}
-                value={phone}
-              />
-            </>
-          </CollapsibleSection>
-        </div>
-        <div className={containerCN}>
-          <CollapsibleSection title="Location Information">
-            <>
-              <Input
-                label="Street Address*"
-                placeholder="Street Address"
-                value={street}
-                onChange={(val) => masterChange(val, setStreet)}
-              />
-              <Input
-                label="City*"
-                placeholder="City"
-                value={city}
-                onChange={(val) => masterChange(val, setCity)}
-              />
-              <Input
-                label="Suite/Unit"
-                placeholder="Suite/Unit"
-                value={suite}
-                onChange={(val) => masterChange(val, setSuite)}
-              />
-              <Dropdown
-                label="Country"
-                options={stateOptions}
-                value={country}
-                onChange={(val) => masterChange(val, setCountry)}
-              />
-              <Input
-                label="Postal Code*"
-                placeholder="Postal Code"
-                value={postalCode}
-                onChange={(val) => masterChange(val, setPostalCode)}
-              />
-            </>
-          </CollapsibleSection>
-        </div>
-        <div className={containerCN}>
-          <Button title="Button" onClick={handleBtnClick} />
-        </div>
+        {/* wrapping elements in form element just in case we need to take advantage of some form props */}
+        <form noValidate className="w-full">
+          <div className={containerCN}>
+            <CollapsibleSection title="Overview">
+              <div className="lg:grid lg:grid-cols-2 lg:gap-x-4">
+                <Dropdown
+                  className="mb-2"
+                  label="Company Name"
+                  options={companyOptions}
+                  onChange={(val) => masterChange(val, setCompany)}
+                  value={companyName}
+                />
+                <Input
+                  className="mb-2"
+                  label="eSpace Name"
+                  placeholder="Space Name"
+                  onChange={(val) => masterChange(val, setSpaceName)}
+                  value={eSpaceName}
+                  isRequired
+                />
+                <Dropdown
+                  className="mb-2"
+                  // label={setRequiredField("Subscription")}
+                  label="Subscription"
+                  options={subscriptionOptions}
+                  onChange={(val) => masterChange(val, setSubscription)}
+                  value={subscription}
+                  isRequired
+                />
+              </div>
+            </CollapsibleSection>
+          </div>
+          <div className={containerCN}>
+            <CollapsibleSection title="Owner Information">
+              <div className="lg:grid lg:grid-cols-2 lg:gap-x-4">
+                <Input
+                  label="Primary Owner"
+                  placeholder="Primary Owner"
+                  onChange={(val) => masterChange(val, setName)}
+                  value={name}
+                  isRequired
+                />
+                <Input
+                  // Proper and valid email address format should be required
+                  label="Primary Owner Email"
+                  placeholder="Primary Email"
+                  onChange={(val) => masterChange(val, setEmail)}
+                  value={email}
+                  isRequired
+                />
+                <Input
+                  // Phone number format may be needed
+                  label="Primary Owner Phone"
+                  placeholder="Primary Phone"
+                  onChange={(val) => masterChange(val, setPhone)}
+                  value={phone}
+                  isRequired
+                />
+              </div>
+            </CollapsibleSection>
+          </div>
+          <div className={containerCN}>
+            <CollapsibleSection title="Location Information">
+              <div className="lg:grid lg:grid-cols-2 lg:gap-x-4">
+                <Input
+                  label="Street Address"
+                  placeholder="Street Address"
+                  value={street}
+                  onChange={(val) => masterChange(val, setStreet)}
+                  isRequired
+                />
+                <Input
+                  label="City"
+                  placeholder="City"
+                  value={city}
+                  onChange={(val) => masterChange(val, setCity)}
+                  isRequired
+                />
+                <Input
+                  label="Suite/Unit"
+                  placeholder="Suite/Unit"
+                  value={suite}
+                  onChange={(val) => masterChange(val, setSuite)}
+                />
+                <Dropdown
+                  label="Country"
+                  options={stateOptions}
+                  value={country}
+                  onChange={(val) => masterChange(val, setCountry)}
+                />
+                <Input
+                  // Postal Code format may be needed
+                  label="Postal Code"
+                  placeholder="Postal Code"
+                  value={postalCode}
+                  onChange={(val) => masterChange(val, setPostalCode)}
+                  isRequired
+                />
+              </div>
+            </CollapsibleSection>
+          </div>
+          <div className={containerCN}>
+            <Button title="Button" onClick={handleBtnClick} type="submit" />
+          </div>
+        </form>
       </div>
     </div>
   );
