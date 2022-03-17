@@ -87,6 +87,7 @@ const App = () => {
     };
     evt.preventDefault();
     console.log({ submitObj }); // not recommended in production code
+    // clear form fields
   };
 
   // utility function to make the Subscription dropdown required
@@ -127,14 +128,14 @@ const App = () => {
             <CollapsibleSection title="Overview">
               <div className="lg:grid lg:grid-cols-2 lg:gap-x-4">
                 <Dropdown
-                  className="mb-2"
+                  className="mb-4"
                   label="Company Name"
                   options={companyOptions}
                   onChange={(val) => masterChange(val, setCompany)}
                   value={companyName}
                 />
                 <Input
-                  className="mb-2"
+                  className="mb-4"
                   label="eSpace Name"
                   placeholder="Space Name"
                   onChange={(val) => masterChange(val, setSpaceName)}
@@ -142,9 +143,9 @@ const App = () => {
                   isRequired
                 />
                 <Dropdown
-                  className="mb-2"
+                  className="mb-4"
                   // label={setRequiredField("Subscription")}
-                  label="Subscription"
+                  label="Subscription*"
                   options={subscriptionOptions}
                   onChange={(val) => masterChange(val, setSubscription)}
                   value={subscription}
@@ -157,6 +158,7 @@ const App = () => {
             <CollapsibleSection title="Owner Information">
               <div className="lg:grid lg:grid-cols-2 lg:gap-x-4">
                 <Input
+                  className="mb-4"
                   label="Primary Owner"
                   placeholder="Primary Owner"
                   onChange={(val) => masterChange(val, setName)}
@@ -165,6 +167,7 @@ const App = () => {
                 />
                 <Input
                   // Proper and valid email address format should be required
+                  className="mb-4"
                   label="Primary Owner Email"
                   placeholder="Primary Email"
                   onChange={(val) => masterChange(val, setEmail)}
@@ -173,6 +176,7 @@ const App = () => {
                 />
                 <Input
                   // Phone number format may be needed
+                  className="mb-4"
                   label="Primary Owner Phone"
                   placeholder="Primary Phone"
                   onChange={(val) => masterChange(val, setPhone)}
@@ -186,6 +190,7 @@ const App = () => {
             <CollapsibleSection title="Location Information">
               <div className="lg:grid lg:grid-cols-2 lg:gap-x-4">
                 <Input
+                  className="mb-4"
                   label="Street Address"
                   placeholder="Street Address"
                   value={street}
@@ -193,6 +198,7 @@ const App = () => {
                   isRequired
                 />
                 <Input
+                  className="mb-4"
                   label="City"
                   placeholder="City"
                   value={city}
@@ -200,12 +206,14 @@ const App = () => {
                   isRequired
                 />
                 <Input
+                  className="mb-4"
                   label="Suite/Unit"
                   placeholder="Suite/Unit"
                   value={suite}
                   onChange={(val) => masterChange(val, setSuite)}
                 />
                 <Dropdown
+                  className="mb-4"
                   label="Country"
                   options={stateOptions}
                   value={country}
@@ -213,6 +221,7 @@ const App = () => {
                 />
                 <Input
                   // Postal Code format may be needed
+                  className="mb-4"
                   label="Postal Code"
                   placeholder="Postal Code"
                   value={postalCode}
