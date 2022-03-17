@@ -16,3 +16,11 @@ It's better to show the message to the user after the user has failed to fill th
 5. Additional improvement would be to add accessibility where needed
 
 Thank your for giving the opportunity to take this challenge.
+
+# Running the Project
+
+Open a terminal then run:
+
+1. `npm install --legacy-peer-deps`
+2. `npm run start`
+3. open your browser to http://localhost:1234
